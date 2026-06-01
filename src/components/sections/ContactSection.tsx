@@ -22,10 +22,11 @@ export function ContactSection() {
 
   const referralOptions = [
     { value: "", label: "Selecciona una opción" },
-    { value: "google", label: "Búsqueda en Google" },
-    { value: "redes", label: "Redes Sociales (LinkedIn, Facebook)" },
-    { value: "recomendacion", label: "Recomendación o boca a boca" },
-    { value: "otro", label: "Otro canal" },
+    { value: "ia", label: "Inteligencia artificial" },
+    { value: "software", label: "Fábrica de software" },
+    { value: "consultoria", label: "Consultoría de Innovación y Procesos" },
+    { value: "ux", label: "Diseño de Experiencia de Usuario" },
+    { value: "salud", label: "Clínicas, Seguros y Salud" },
   ];
 
   const validate = () => {
@@ -161,7 +162,7 @@ export function ContactSection() {
 
                   <Select
                     name="referral"
-                    label="¿Cómo te enteraste de nosotros?"
+                    label="¿En qué solución estás interesado(a)?"
                     options={referralOptions}
                     value={formState.referral}
                     onChange={handleChange}

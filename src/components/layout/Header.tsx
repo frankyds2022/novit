@@ -2,24 +2,42 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { useRouter, usePathname } from "next/navigation";
 import { Button } from "../ui/Button";
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const router = useRouter();
 
   const navLinks = [
-    { label: "Qué hacemos", href: "#servicios" },
-    { label: "Trayectoria", href: "#trayectoria" },
-    { label: "Inteligencia Artificial", href: "#ia" },
-    { label: "Caso de éxito", href: "#caso-exito" },
-    { label: "Contacto", href: "#contacto" },
+    { label: "Qué hacemos", href: "/#servicios" },
+    { label: "Trayectoria", href: "/#trayectoria" },
+    { label: "Inteligencia Artificial", href: "/#ia" },
+    { label: "Caso de éxito", href: "/#caso-exito" },
+    { label: "Contacto", href: "/#contacto" },
   ];
+
+  const handleNavigation = (e: React.MouseEvent, href: string) => {
+    if (href.startsWith("/#") && pathname === "/") {
+      e.preventDefault();
+      const targetId = href.substring(2);
+      const element = document.getElementById(targetId);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    } else if (href === "/" && pathname === "/") {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
 
   return (
     <header className="sticky top-0 z-45 w-full border-b border-zinc-100 bg-white/90 backdrop-blur-md">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 sm:px-8">
         {/* Brand Logo */}
-        <a href="#" className="flex items-center group">
+        <Link href="/" onClick={(e) => handleNavigation(e, "/")} className="flex items-center group">
           <Image
             src="/images/logo-novit.png"
             alt="Novit Logo"
@@ -28,24 +46,39 @@ export function Header() {
             priority
             className="h-9 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.03]"
           />
-        </a>
+        </Link>
 
         {/* Desktop Navigation Links */}
         <nav className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
-            <a
+            <Link
               key={link.label}
               href={link.href}
+              onClick={(e) => handleNavigation(e, link.href)}
               className="text-sm font-semibold text-zinc-600 hover:text-zinc-950 transition-colors relative after:absolute after:bottom-[-4px] after:left-0 after:h-[2px] after:w-0 after:bg-[#00d0b8] after:transition-all after:duration-300 hover:after:w-full"
             >
               {link.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
         {/* Action Button */}
         <div className="hidden md:flex items-center">
-          <Button variant="teal" size="md" onClick={() => window.location.href = "#contacto"}>
+          <Button
+            variant="teal"
+            size="md"
+            onClick={(e) => {
+              if (pathname === "/") {
+                e.preventDefault();
+                const element = document.getElementById("contacto");
+                if (element) {
+                  element.scrollIntoView({ behavior: "smooth" });
+                }
+              } else {
+                router.push("/#contacto");
+              }
+            }}
+          >
             Agendar demo
           </Button>
         </div>
@@ -76,23 +109,34 @@ export function Header() {
         <div className="md:hidden border-t border-zinc-100 bg-white/95 px-6 py-6 shadow-xl animate-in fade-in slide-in-from-top-4 duration-300 absolute left-0 right-0 top-[80px]">
           <nav className="flex flex-col gap-5">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.label}
                 href={link.href}
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={(e) => {
+                  setMobileMenuOpen(false);
+                  handleNavigation(e, link.href);
+                }}
                 className="text-base font-semibold text-zinc-700 hover:text-zinc-950 transition-colors"
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
             <div className="border-t border-zinc-100 pt-5">
               <Button
                 variant="teal"
                 size="md"
                 className="w-full justify-center"
-                onClick={() => {
+                onClick={(e) => {
                   setMobileMenuOpen(false);
-                  window.location.href = "#contacto";
+                  if (pathname === "/") {
+                    e.preventDefault();
+                    const element = document.getElementById("contacto");
+                    if (element) {
+                      element.scrollIntoView({ behavior: "smooth" });
+                    }
+                  } else {
+                    router.push("/#contacto");
+                  }
                 }}
               >
                 Agendar demo

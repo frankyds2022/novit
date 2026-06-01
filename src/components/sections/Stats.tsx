@@ -60,7 +60,7 @@ export function Stats() {
                 <Button 
                   variant="teal" 
                   size="md"
-                  onClick={() => window.location.href = "#caso-exito"}
+                  onClick={() => window.location.href = "/clinics-health-insurance"}
                 >
                   Conoce nuestro HIS
                   <svg className="ml-2 h-4 w-4 fill-none stroke-current" viewBox="0 0 24 24" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
