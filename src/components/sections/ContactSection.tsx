@@ -19,6 +19,7 @@ export function ContactSection() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [submissionError, setSubmissionError] = useState("");
 
   const referralOptions = [
     { value: "", label: "Selecciona una opción" },
@@ -51,26 +52,53 @@ export function ContactSection() {
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: "" }));
     }
+    if (submissionError) {
+      setSubmissionError("");
+    }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
 
     setLoading(true);
+    setSubmissionError("");
 
-    // Simulate API call
-    setTimeout(() => {
-      setLoading(false);
-      setSuccess(true);
-      setFormState({
-        nombre: "",
-        correo: "",
-        telefono: "",
-        referral: "",
-        proyecto: "",
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          nombre: formState.nombre,
+          correo: formState.correo,
+          telefono: formState.telefono,
+          referral: referralOptions.find((o) => o.value === formState.referral)?.label || formState.referral,
+          proyecto: formState.proyecto,
+        }),
       });
-    }, 1500);
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        setSuccess(true);
+        setFormState({
+          nombre: "",
+          correo: "",
+          telefono: "",
+          referral: "",
+          proyecto: "",
+        });
+      } else {
+        setSubmissionError(data.error || "Ocurrió un error al enviar el formulario. Por favor, intenta de nuevo.");
+      }
+    } catch (error) {
+      console.error("Error al enviar formulario:", error);
+      setSubmissionError("Error de conexión. Por favor verifica tu red e intenta nuevamente.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -121,6 +149,18 @@ export function ContactSection() {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+                  {submissionError && (
+                    <div className="rounded-xl bg-red-50 border border-red-200 p-4 text-sm text-red-600 text-left animate-in fade-in duration-200">
+                      <div className="flex items-start gap-2.5">
+                        <svg className="h-5 w-5 text-red-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                          <circle cx="12" cy="12" r="10" />
+                          <line x1="12" y1="8" x2="12" y2="12" />
+                          <line x1="12" y1="16" x2="12.01" y2="16" />
+                        </svg>
+                        <span>{submissionError}</span>
+                      </div>
+                    </div>
+                  )}
                   <div className="flex flex-col text-left">
                     <span className="text-xs font-bold uppercase tracking-widest text-[#00d0b8]">
                       COTIZA TU PROYECTO
