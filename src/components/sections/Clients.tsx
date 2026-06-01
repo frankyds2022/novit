@@ -1,15 +1,23 @@
 import React from "react";
+import Image from "next/image";
 
 export function Clients() {
   const clientLogos = [
-    { name: "RIMAC SEGUROS", color: "hover:text-blue-600 hover:border-blue-600/30" },
-    { name: "PACÍFICO SEGUROS", color: "hover:text-cyan-500 hover:border-cyan-500/30" },
-    { name: "AUNA", color: "hover:text-teal-600 hover:border-teal-600/30" },
-    { name: "INTERCORP", color: "hover:text-green-600 hover:border-green-600/30" },
-    { name: "MAPFRE", color: "hover:text-red-500 hover:border-red-500/30" },
-    { name: "CLÍNICA DELGADO", color: "hover:text-blue-800 hover:border-blue-800/30" },
-    { name: "AVIVA CLÍNICA", color: "hover:text-purple-500 hover:border-purple-500/30" },
-    { name: "SANNA", color: "hover:text-sky-500 hover:border-sky-500/30" },
+    { name: "Rímac", image: "/images/logo-rimac.png" },
+    { name: "Pacífico", image: "/images/logo-pacifico.png" },
+    { name: "Auna", image: "/images/logo-auna.png" },
+    { name: "Intercorp", image: "/images/logo-intercorp.png" },
+    { name: "Mapfre", image: "/images/logo-mapfre.png" },
+    { name: "Aviva", image: "/images/logo-aviva.png" },
+    { name: "Sanna", image: "/images/logo-sanna.png" },
+    { name: "Aliada", image: "/images/logo-aliada.png" },
+    { name: "Boticas y Salud", image: "/images/logo-boticasysalud.png" },
+    { name: "CRP", image: "/images/logo-crp.png" },
+    { name: "Roe", image: "/images/logo-roe.png" },
+    { name: "Sedapal", image: "/images/logo-sedapal.png" },
+    { name: "Sunat", image: "/images/logo-sunat.png" },
+    { name: "PUCP", image: "/images/logo-pucp.png" },
+    { name: "Latina", image: "/images/logo-latina.png" },
   ];
 
   return (
@@ -26,17 +34,21 @@ export function Clients() {
           </h2>
         </div>
 
-        {/* Corporate Grayscale Logos Grid */}
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 sm:gap-6">
+        {/* Corporate Logos Grid (Grayscale to full color transition) */}
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5 sm:gap-6">
           {clientLogos.map((client) => (
             <div 
               key={client.name} 
-              className={`flex h-20 items-center justify-center rounded-2xl border border-zinc-100 bg-zinc-50/50 p-4 transition-all duration-300 hover:bg-white hover:shadow-[0_4px_20px_rgba(0,0,0,0.02)] cursor-pointer text-zinc-400 font-black tracking-widest text-xs sm:text-sm select-none ${client.color}`}
+              className="flex h-24 items-center justify-center rounded-2xl border border-zinc-100 bg-zinc-50/30 p-5 transition-all duration-300 hover:bg-white hover:shadow-[0_8px_30px_rgba(0,0,0,0.03)] cursor-pointer group"
             >
-              <div className="flex items-center gap-1.5">
-                {/* Micro branding bullet */}
-                <div className="h-2 w-2 rounded-full bg-current opacity-20" />
-                <span>{client.name}</span>
+              <div className="relative w-full h-full max-w-[120px] aspect-[3/1] grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300">
+                <Image
+                  src={client.image}
+                  alt={`Logo ${client.name}`}
+                  fill
+                  className="object-contain"
+                  sizes="120px"
+                />
               </div>
             </div>
           ))}

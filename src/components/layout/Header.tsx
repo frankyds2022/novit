@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import { Button } from "../ui/Button";
 
 export function Header() {
@@ -18,15 +19,15 @@ export function Header() {
     <header className="sticky top-0 z-45 w-full border-b border-zinc-100 bg-white/90 backdrop-blur-md">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 sm:px-8">
         {/* Brand Logo */}
-        <a href="#" className="flex items-center gap-2.5 group">
-          {/* Cyan corporate mark */}
-          <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-[#00d0b8] text-white font-extrabold text-lg shadow-[0_4px_12px_rgba(0,208,184,0.2)] transition-transform duration-300 group-hover:rotate-6">
-            N
-            <div className="absolute -top-0.5 -right-0.5 h-3 w-3 rounded-full bg-zinc-950 border-2 border-white animate-ping" />
-          </div>
-          <span className="text-2xl font-black tracking-tight text-zinc-900 transition-colors group-hover:text-[#00d0b8]">
-            NOVIT
-          </span>
+        <a href="#" className="flex items-center group">
+          <Image
+            src="/images/logo-novit.png"
+            alt="Novit Logo"
+            width={112}
+            height={36}
+            priority
+            className="h-9 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.03]"
+          />
         </a>
 
         {/* Desktop Navigation Links */}

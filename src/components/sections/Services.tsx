@@ -1,42 +1,27 @@
 import React from "react";
+import Image from "next/image";
 
 export function Services() {
   const serviceList = [
     {
       title: "Inteligencia Artificial",
       description: "Automatización de procesos, chatbots e inteligencia de negocios.",
-      icon: (
-        <svg className="h-6 w-6 text-[#00d0b8]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-        </svg>
-      ),
+      image: "/images/icon-demo.png",
     },
     {
       title: "Fábrica de software",
       description: "Desarrollo ágil a medida de aplicaciones web y móviles.",
-      icon: (
-        <svg className="h-6 w-6 text-[#00d0b8]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-        </svg>
-      ),
+      image: "/images/icon-demo2-150x150.png",
     },
     {
       title: "Consultoría de Innovación y Procesos",
       description: "Análisis de procesos y co-creación de nuevos productos digitales.",
-      icon: (
-        <svg className="h-6 w-6 text-[#00d0b8]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-        </svg>
-      ),
+      image: "/images/icon-demo3.png",
     },
     {
       title: "Diseño UX",
       description: "Investigación de usuarios, diseño de interfaces y prototipos interactivos.",
-      icon: (
-        <svg className="h-6 w-6 text-[#00d0b8]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-        </svg>
-      ),
+      image: "/images/icon-demo4.png",
     },
   ];
 
@@ -61,8 +46,15 @@ export function Services() {
                 key={service.title} 
                 className="group relative flex flex-col gap-4 rounded-2xl border border-zinc-100 bg-white p-6 shadow-[0_4px_20px_rgba(0,0,0,0.01)] transition-all duration-300 hover:-translate-y-1 hover:border-[#00d0b8]/30 hover:shadow-[0_8px_30px_rgba(0,208,184,0.05)]"
               >
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#00d0b8]/10 text-[#00d0b8]">
-                  {service.icon}
+                {/* Image Icon instead of SVG */}
+                <div className="relative flex h-14 w-14 items-center justify-center rounded-xl bg-zinc-50 border border-zinc-100 p-2 shadow-sm transition-transform duration-300 group-hover:scale-105">
+                  <Image
+                    src={service.image}
+                    alt={service.title}
+                    width={40}
+                    height={40}
+                    className="object-contain"
+                  />
                 </div>
                 
                 {/* Title styled like a sleek link/heading */}
